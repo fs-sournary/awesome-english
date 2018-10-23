@@ -1,0 +1,73 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+androidExtensions {
+    experimental = true
+}
+
+android {
+    compileSdkVersion build_version.target_sdk
+    defaultConfig {
+        applicationId "com.sournary.awesomeenglish"
+        minSdkVersion build_version.min_sdk
+        targetSdkVersion build_version.target_sdk
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    // kotlin
+    implementation deps.kotlin.stdlib
+
+    // design
+    implementation deps.design.appcompat
+    implementation deps.design.material_component
+    implementation deps.design.constraint_layout
+
+    // lifecycle
+    implementation deps.lifecycle.extensions
+    kapt deps.lifecycle.compiler
+
+    // Room
+    implementation deps.room.runtime
+    kapt deps.room.compiler
+
+    // paging
+    implementation deps.paging.runtime
+
+    // Navigation
+    implementation deps.navigation.fragment
+    implementation deps.navigation.ui
+
+    // Dagger
+    implementation deps.dagger.runtime
+    implementation deps.dagger.android
+    implementation deps.dagger.android_support
+    kapt deps.dagger.compiler
+    kapt deps.dagger.android_support_compiler
+
+    // Retrofit
+    implementation deps.retrofit.runtime
+    implementation deps.retrofit.gson
+
+    // Koin
+    implementation deps.koin.core
+    implementation deps.koin.android
+    implementation deps.koin.android_viewmodel
+
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test:runner:1.1.0-alpha4'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-alpha4'
+}
