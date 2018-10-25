@@ -1,8 +1,9 @@
 package com.sournary.awesomeenglish.di
 
+import com.sournary.awesomeenglish.MainViewModel
 import com.sournary.awesomeenglish.ui.menu.MenuViewModel
+import org.koin.android.viewmodel.experimental.builder.viewModel
 import org.koin.dsl.module.module
-import org.koin.experimental.builder.create
 
 /**
  * Created by fs-sournary.
@@ -10,6 +11,6 @@ import org.koin.experimental.builder.create
  * Description:
  */
 val viewModelModule = module(override = true) {
-    single { create<MenuViewModel>() }
-
+    viewModel<MenuViewModel>()
+    viewModel<MainViewModel>()
 }

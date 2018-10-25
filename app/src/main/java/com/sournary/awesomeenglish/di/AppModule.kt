@@ -10,3 +10,11 @@ import org.koin.dsl.module.module
 val appModule = module {
 
 }
+
+val modules = listOf(
+    viewModelModule,
+    localDataSourceModule,
+    remoteDataSourceModule,
+    repositoryModule,
+    appModule
+)

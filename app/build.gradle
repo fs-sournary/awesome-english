@@ -23,6 +23,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    dataBinding {
+        enabled = true
+    }
 }
 
 dependencies {
@@ -50,13 +53,6 @@ dependencies {
     // Navigation
     implementation deps.navigation.fragment
     implementation deps.navigation.ui
-
-    // Dagger
-    implementation deps.dagger.runtime
-    implementation deps.dagger.android
-    implementation deps.dagger.android_support
-    kapt deps.dagger.compiler
-    kapt deps.dagger.android_support_compiler
 
     // Retrofit
     implementation deps.retrofit.runtime

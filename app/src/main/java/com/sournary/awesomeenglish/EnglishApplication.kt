@@ -13,13 +13,6 @@ class EnglishApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        val modules = listOf(
-            viewModelModule,
-            localDataSourceModule,
-            remoteDataSourceModule,
-            repositoryModule,
-            appModule
-        )
         startKoin(this, modules)
     }
 }
