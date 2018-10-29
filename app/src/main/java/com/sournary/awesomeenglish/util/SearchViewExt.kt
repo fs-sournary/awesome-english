@@ -7,9 +7,12 @@ import android.util.TypedValue
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
+import androidx.annotation.DimenRes
 import androidx.annotation.DrawableRes
 import androidx.appcompat.widget.SearchView
 import com.sournary.awesomeenglish.R
+import io.reactivex.Observable
+import io.reactivex.subjects.PublishSubject
 
 /**
  * Created by fs-sournary.
@@ -26,9 +29,14 @@ fun SearchView.customSearchCloseButton(@DrawableRes imageId: Int = R.drawable.ic
     searchCloseButton.setImageResource(imageId)
 }
 
-fun SearchView.customVoiceSearch(@DrawableRes imageId: Int = R.drawable.ic_voice_search) {
+fun SearchView.customVoiceSearch(
+    @DrawableRes imageId: Int = R.drawable.ic_voice_search,
+    @DimenRes paddingId: Int = R.dimen.dp_4
+) {
     val searchVoiceButton = findViewById<ImageView>(R.id.search_voice_btn)
     searchVoiceButton.setImageResource(imageId)
+    val padding = context.resources.getDimensionPixelOffset(paddingId)
+    searchVoiceButton.setPadding(padding, 0, padding, 0)
 }
 
 fun SearchView.enableVoiceSearch() {
@@ -36,4 +44,28 @@ fun SearchView.enableVoiceSearch() {
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
         setSearchableInfo(searchManager.getSearchableInfo(componentName))
     }
+}
+
+fun SearchView.querySearch(oldQuery: String?): Observable<String> {
+    val subject = PublishSubject.create<String>()
+    setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+        override fun onQueryTextSubmit(query: String?): Boolean {
+            return if (query == null) {
+                false
+            } else {
+                subject.onComplete()
+                true
+            }
+        }
+
+        override fun onQueryTextChange(newText: String?): Boolean {
+            return if (newText == null || oldQuery == newText) {
+                false
+            } else {
+                subject.onNext(newText)
+                true
+            }
+        }
+    })
+    return subject
 }

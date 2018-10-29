@@ -1,5 +1,7 @@
 package com.sournary.awesomeenglish.di
 
+import com.sournary.awesomeenglish.db.EVDb
+import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module.module
 
 /**
@@ -8,13 +10,13 @@ import org.koin.dsl.module.module
  * Description:
  */
 val appModule = module {
-
+    single { EVDb.getInstance(androidContext()).getEVDao() }
 }
 
 val modules = listOf(
-    viewModelModule,
     localDataSourceModule,
     remoteDataSourceModule,
     repositoryModule,
-    appModule
+    appModule,
+    viewModelModule
 )
