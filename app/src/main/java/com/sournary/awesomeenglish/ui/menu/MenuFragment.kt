@@ -1,14 +1,17 @@
 package com.sournary.awesomeenglish.ui.menu
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.transition.*
 import com.sournary.awesomeenglish.BR
 import com.sournary.awesomeenglish.R
 import com.sournary.awesomeenglish.databinding.FragmentMenuBinding
+import com.sournary.awesomeenglish.service.DbManagerService
 import com.sournary.awesomeenglish.ui.BaseFragment
 import com.sournary.awesomeenglish.util.*
 import kotlinx.android.synthetic.main.fragment_menu.view.*
@@ -52,6 +55,7 @@ class MenuFragment : BaseFragment() {
             setLifecycleOwner(this@MenuFragment)
             executePendingBindings()
         }
+        lifecycle.addObserver(menuViewModel)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -65,6 +69,7 @@ class MenuFragment : BaseFragment() {
         menuScene.setEnterAction {
             currentScene = menuScene
             setupSearchWidgetInMenuScene()
+            setupViewModel()
         }
         // Create transition: menu -> search
         val menuTransition = TransitionSet()
@@ -134,7 +139,10 @@ class MenuFragment : BaseFragment() {
     }
 
     private fun setupViewModel() {
-
+        menuViewModel.extraDbEvent.observe(this, Observer {
+            val intent = Intent(activity!!, DbManagerService::class.java)
+            activity!!.startService(intent)
+        })
     }
 
     override fun onBackPress() {

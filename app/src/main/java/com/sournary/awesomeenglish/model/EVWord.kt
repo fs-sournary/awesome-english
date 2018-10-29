@@ -2,8 +2,6 @@ package com.sournary.awesomeenglish.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
-import androidx.room.TypeConverters
-import com.sournary.awesomeenglish.db.EnglishConverters
 
 /**
  * Created by fs-sournary.
@@ -11,7 +9,6 @@ import com.sournary.awesomeenglish.db.EnglishConverters
  * Description:
  */
 @Entity(tableName = "word_tbl", primaryKeys = ["word"])
-@TypeConverters(EnglishConverters::class)
 data class EVWord(
     @ColumnInfo(name = "word")
     val word: String = "Unknown word",

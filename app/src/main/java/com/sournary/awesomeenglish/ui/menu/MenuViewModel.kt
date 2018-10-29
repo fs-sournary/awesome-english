@@ -4,8 +4,10 @@ import android.util.Log
 import androidx.lifecycle.*
 import androidx.paging.PagedList
 import com.sournary.awesomeenglish.model.EVWord
-import com.sournary.awesomeenglish.repository.EVRepository
+import com.sournary.awesomeenglish.repository.ev.EVRepository
+import com.sournary.awesomeenglish.repository.setting.SettingRepository
 import com.sournary.awesomeenglish.rx.SchedulerProvider
+import com.sournary.awesomeenglish.util.SingleLiveEvent
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.subscribeBy
@@ -18,11 +20,13 @@ import java.util.concurrent.TimeUnit
  */
 class MenuViewModel(
     private val evRepository: EVRepository,
+    private val settingRepository: SettingRepository,
     private val schedulerProvider: SchedulerProvider
 ) : ViewModel(), LifecycleObserver {
 
     private val compositeDisposable = CompositeDisposable()
 
+    val extraDbEvent = SingleLiveEvent<Unit>()
     val searchResults = MutableLiveData<PagedList<EVWord>>()
 
     fun searchWords(searchObservable: Observable<String>) {
@@ -40,6 +44,14 @@ class MenuViewModel(
                 onComplete = {}
             )
         compositeDisposable.add(disposable)
+    }
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_START)
+    fun start() {
+        if (settingRepository.getLocalDbStatus()) {
+            return
+        }
+        extraDbEvent.call()
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_STOP)

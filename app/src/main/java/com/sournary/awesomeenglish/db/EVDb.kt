@@ -12,7 +12,8 @@ import com.sournary.awesomeenglish.model.EVWord
  * Date: 10/28/18.
  * Description:
  */
-@Database(entities = [EVWord::class], version = EVDb.EV_DB_VERSION)
+@Database(entities = [EVWord::class], version = EVDb.EV_DB_VERSION, exportSchema = false)
+@TypeConverters(value = [EnglishConverters::class])
 abstract class EVDb : RoomDatabase() {
 
     abstract fun getEVDao(): EVDao
@@ -20,10 +21,11 @@ abstract class EVDb : RoomDatabase() {
     companion object {
 
         const val EV_DB_VERSION = 1
-        private const val EV_DB_NAME = "awesome-english"
+        private const val EV_DB_NAME = "ev"
 
         fun getInstance(context: Context): EVDb =
             Room.databaseBuilder(context, EVDb::class.java, EV_DB_NAME)
-                .fallbackToDestructiveMigration().build()
+                .fallbackToDestructiveMigration()
+                .build()
     }
 }
