@@ -2,11 +2,11 @@ package com.sournary.awesomeenglish
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
 
-    private val mainViewModel: MainViewModel by inject()
+    private val mainViewModel: MainViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -12,6 +12,9 @@ versions.okhttp_logging_interceptor = "3.11.0"
 versions.android_gradle_plugin = "3.3.0-alpha08"
 versions.kotlin = "1.2.61"
 versions.koin = "1.0.1"
+versions.rxandroid = "2.1.0"
+versions.rxjava = "2.2.3"
+versions.rxkotlin = "2.2.0"
 
 def design = [:]
 design.appcompat = "androidx.appcompat:appcompat:$versions.appcompat"
@@ -52,7 +55,12 @@ kotlin.allopen = "org.jetbrain.kotlin:kotlin-allopen:$versions.kotlin"
 def koin = [:]
 koin.core = "org.koin:koin-core:$versions.koin"
 koin.android = "org.koin:koin-android:$versions.koin"
-koin.android_viewmodel = "org.koin:koin-android-viewmodel:$versions.koin"
+koin.android_viewmodel = "org.koin:koin-androidx-viewmodel:$versions.koin"
+
+def rx = [:]
+rx.rxkotlin = "io.reactivex.rxjava2:rxkotlin:$versions.rxkotlin"
+rx.rxandroid = "io.reactivex.rxjava2:rxandroid:$versions.rxandroid"
+rx.rxjava = "io.reactivex.rxjava2:rxjava:$versions.rxjava"
 
 def build_version = [:]
 build_version.min_sdk = 21
@@ -70,6 +78,7 @@ deps.kotlin = kotlin
 deps.okhttp_logging_interceptor = "com.squareup.okhttp3:logging-interceptor:$versions.okhttp_logging_interceptor"
 deps.android_gradle_plugin = "com.android.tools.build:gradle:$versions.android_gradle_plugin"
 deps.koin = koin
+deps.rx = rx
 
 static def addRepo(RepositoryHandler handler) {
     handler.google()
