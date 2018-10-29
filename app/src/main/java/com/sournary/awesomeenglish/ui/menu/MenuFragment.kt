@@ -113,6 +113,7 @@ class MenuFragment : BaseFragment() {
     private fun setupSearchWidgetInSearchScene() {
         customSearchWidget()
         showKeyBoard()
+        menuViewModel.searchWords(rootView.search.querySearch())
     }
 
     private fun customSearchWidget() {

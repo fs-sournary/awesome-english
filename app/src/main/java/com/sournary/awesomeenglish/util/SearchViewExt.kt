@@ -46,25 +46,17 @@ fun SearchView.enableVoiceSearch() {
     }
 }
 
-fun SearchView.querySearch(oldQuery: String?): Observable<String> {
+fun SearchView.querySearch(): Observable<String> {
     val subject = PublishSubject.create<String>()
     setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-        override fun onQueryTextSubmit(query: String?): Boolean {
-            return if (query == null) {
-                false
-            } else {
-                subject.onComplete()
-                true
-            }
+        override fun onQueryTextSubmit(query: String): Boolean {
+            subject.onComplete()
+            return true
         }
 
-        override fun onQueryTextChange(newText: String?): Boolean {
-            return if (newText == null || oldQuery == newText) {
-                false
-            } else {
-                subject.onNext(newText)
-                true
-            }
+        override fun onQueryTextChange(newText: String): Boolean {
+            subject.onNext(newText)
+            return true
         }
     })
     return subject
