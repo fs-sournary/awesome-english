@@ -8,7 +8,7 @@ import com.sournary.awesomeenglish.util.SingleLiveEvent
  * Date: 10/25/18.
  * Description:
  */
-class MainViewModel : ViewModel() {
+class MainViewModel() : ViewModel() {
 
     val onBackPressEvent = SingleLiveEvent<Unit>()
 }

@@ -7,7 +7,7 @@ import com.sournary.awesomeenglish.model.EVWord
 
 /**
  * Created by fs-sournary.
- * Date: 10/28/18.
+ * Date: 10/30/18.
  * Description:
  */
 @Dao

@@ -1,6 +1,8 @@
 package com.sournary.awesomeenglish.di
 
 import com.sournary.awesomeenglish.db.EVDb
+import com.sournary.awesomeenglish.pref.AppPref
+import com.sournary.awesomeenglish.pref.PrefHelper
 import com.sournary.awesomeenglish.rx.AppSchedulerProvider
 import com.sournary.awesomeenglish.rx.SchedulerProvider
 import org.koin.android.ext.koin.androidContext
@@ -15,6 +17,7 @@ import org.koin.experimental.builder.create
 val appModule = module {
     single { EVDb.getInstance(androidContext()).getEVDao() }
     single<SchedulerProvider> { create<AppSchedulerProvider>() }
+    single<PrefHelper> { create<AppPref>() }
 }
 
 val modules = listOf(
